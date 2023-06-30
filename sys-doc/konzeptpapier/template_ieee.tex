@@ -1,0 +1,253 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Konzeptpapier
+	\\Computer Vision Pipeline}
+
+% Authoren	
+\author{
+
+	\IEEEauthorblockN{André Kestler}
+	\IEEEauthorblockA{
+		\textit{a.kestler@oth-aw.de}\\
+	}
+	\\
+	
+	\IEEEauthorblockN{Antonio Vidos}
+	\IEEEauthorblockA{
+		\textit{a.vidos@oth-aw.de}\\
+	}
+	\and
+	
+	\IEEEauthorblockN{Marcus Haberl}
+	\IEEEauthorblockA{
+		\textit{m.haberl@oth-aw.de}\\
+	}
+	\\
+	
+	\IEEEauthorblockN{Tobias Dobmeier}
+	\IEEEauthorblockA{
+		\textit{t.dobmeier@oth-aw.de}\\
+	}
+	\and
+	
+	\IEEEauthorblockN{Tobias Lettner}
+	\IEEEauthorblockA{
+		\textit{t.lettner@oth-aw.de}\\
+	}
+	\\
+	
+	\IEEEauthorblockN{Tobias Weiß}
+	\IEEEauthorblockA{
+		\textit{t.weiss@oth-aw.de}\\
+	}
+}
+
+
+\maketitle
+
+\begin{abstract}
+	Ziel des Projekts ist die Implementierung einer Computer Vision Pipeline als Cloud-Anwendung. In der Benutzeroberfläche kann der Benutzer ein zu verarbeitendes Bild hochladen und eine Verarbeitungskette aus einzelnen Modulen zusammenstellen. Das Backend verarbeitet die Daten in den angegebenen Schritten und stellt dem Benutzer die Ergebnisse als verarbeitetes Bild auf der Webseite zur Verfügung.
+\end{abstract}
+
+
+\section{Einleitung}
+
+Computer Vision ist ein wichtiges Gebiet der digitalen Bildverarbeitung und hat in den letzten Jahren erhebliche Fortschritte gemacht. Es ermöglicht die automatisierte Analyse und Interpretation von Bildern und Videos und hat zahlreiche Anwendungsbereiche in der Industrie, Medizin und Sicherheitstechnik. Eine wichtige Komponente bei der Entwicklung von Computer Vision Anwendungen ist die Erstellung einer robusten und effizienten Pipeline, die die Datenverarbeitung und Analyse durch mehrere Schritte automatisiert und optimiert.
+
+In diesem Projekt wird eine Computer Vision Pipeline als Cloud-Anwendung implementiert, die es dem Benutzer ermöglicht, ein Bild hochzuladen und durch eine Verarbeitungskette das gewünschte Ergebnis zu erhalten. Die Benutzeroberfläche soll eine intuitive Möglichkeit bieten, um den Prozess der Bildanalyse und -verarbeitung zu steuern. Zudem bietet die Cloud-Anwendung eine skalierbare und flexible Infrastruktur, die die Möglichkeit bietet, die Kapazität je nach Bedarf anzupassen.
+
+\section{Verwandte Arbeiten}
+
+Die Webseite ,,Scratch” \cite{scratch} hat ein ähnliches Konzept, das teilweise als Inspiration für die Entwicklung des hier beschriebenen Systems genutzt wurde. Mit ,,Scratch” können Nutzer ohne oder mit wenig Programmiererfahrung die Denkweise eines Softwareentwicklers erlernen und ihre Erfahrungslücken verringern. Die Programmierung erfolgt grafisch, indem der Benutzer Aktionen und Ereignisse als Bausteine auf ein leeres Feld zieht und miteinander verknüpft. Wenn die Bausteine ausgeführt werden, führen sie die entsprechenden Aktionen aus, z.B. die Animation eines Laufenden Mannes.
+
+\section{Anforderungen}
+
+\subsection{Bild upload}
+Als Benutzer möchte ich ein Upload-Feld haben, mit dem ich mein Bild an die Webseite hochladen kann.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Upload-Feld für das Bild
+	\item Bild wird hochgeladen
+\end{itemize}
+
+\subsection{Bild download}
+Als Benutzer möchte ich ein Download-Feld haben, um das fertige Bild lokal herunterzuladen.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Download-Feld für das Bild
+	\item Bild wird heruntergeladen
+\end{itemize}
+
+\subsection{Metadaten}
+Als Entwickler möchte ich dem Benutzer die Metadaten zu seinem Bild anzeigen lassen.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Dimensionen des Bildes
+	\item Pixelanzahl
+	\item Graustufenbild oder Farbbild
+	\item Optional Histogramm aller Kanäle
+\end{itemize}
+
+\subsection{Visualisierung Bild}
+Als Benutzer möchte ich mein originales Bild auf der Webseite sehen.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Bild in ausreichender Qualität darstellen
+\end{itemize}
+
+\subsection{Visualisierung Ergebnisse}
+Als Benutzer möchte ich das Endergebnis, nach der Pipeline und auch alle Zwischenergebnisse betrachten können. Vorallem ist es wichtig, dass zugeordent wird zu welchem Schritt das angezeigte Bild gehört.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Bild in ausreichender Qualität darstellen
+	\item Bild des Zwischenschrittes anzeigen, wenn von Benutzer gefordert
+\end{itemize}
+
+\subsection{Pipeline erstellen}
+Als Benutzer möchte ich die Pipeline intuitiv erstellen und ändern können.
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Mehrfachauswahl möglich
+	\item Drag-Drop der Filter
+\end{itemize}
+
+\subsection{Fehlermeldungen Pipeline}
+Als Entwickler möchte ich dem Benutzer Fehlermeldungen für die Pipeline anzeigen, dass dieser weiß, was er bei Bedarf ändern muss. 
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Bildformat passend
+	\item Vorverarbeitungsschritt vor Filter nötig
+	\item Pipeline ändern
+	\item Filterparameter passend
+\end{itemize}
+
+\subsection{Pipeline Filter}
+Als Benutzer möchte ich Filter auf mein Bild anwenden.
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Bilateral
+	\item Average
+	\item Faltung
+\end{itemize}
+
+\subsection{Pipeline Morphologische Transformationen}
+Als Benutzer möchte ich morphologische Transformationen auf meinem Bild durchführen.
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Erosion
+	\item Dilation
+	\item Opening
+	\item Closing
+\end{itemize}
+
+\subsection{Pipeline Transformationen}
+Als Benutzer möchte ich Transformationen zur Kontrast- und Bildänderung mit meinem Bild ausführen.
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Log-Transformationen
+	\item Gamma-Transformationen
+	\item Geometrische Transformation
+\end{itemize}
+
+\subsection{Pipeline Segmentierung}
+Als Benutzer möchte ich Segmentierungsalgorithmen auf mein Bild anwenden.
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Watershed
+	\item Otsu Thresholding
+\end{itemize}
+
+\subsection{Pipeline Kanten-/Konturenerkennung}
+Als Benutzer möchte ich die Kanten auf meinem Bild erkennen können
+Akzeptanzkriterien:
+\begin{itemize}
+	\item Canny-Edge-Detector
+	\item Sobel
+	\item Laplacian
+\end{itemize}
+
+\subsection{Parameter anpassen}
+Als Benutzer möchte ich Einfluss auf die einzelnen Parameter der Fitler haben, um den jeweiligen Filter anzupassen.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Pop-Up Fenster
+	\item Default Werte vorhanden
+	\item Werte ändern
+\end{itemize}
+
+\subsection{Filter suchen}
+Als Benutzer möchte ich eine Suchfunktion auf der Webseite haben, um bestimmte Filter zu finden. 
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Suchfenster
+	\item Tastatureingabe
+	\item Ergebnisse anzeigen
+\end{itemize}
+
+\subsection{Container}
+Als Entwickler will ich das Projekt mit Containern modularisieren um die Anwendung leicht zu verteilen und die Wartbarkeit dadurch zu erhöhen.
+Akzeptanzkriterien: 
+\begin{itemize}
+	\item Frontend Container
+	\item Backend Container
+	\item Docker-Compose verwalten
+\end{itemize}
+
+\subsection{Testabdeckung}
+Als Entwickler will ich eine Testabdeckung für meine Anwendung, um Fehler frühzeitig erkennen zu können.
+\begin{itemize}
+	\item Backend-Testabdeckung zu mindestens 50\%. Mithilfe von pytest \cite{pytest}.
+	\item Frontend-Testabdeckung zu mindestens 50\%. Mithilfe von Jest \cite{jest}.
+\end{itemize}
+
+\subsection{Cloudanwendung}
+Als Entwickler will ich meine Anwendung über die Cloud verteilen, um möglichst einfach Benutzer anzusprechen.
+\begin{itemize}
+	\item Docker-Container der einzelnen Module
+\end{itemize}
+
+\section{Methoden}
+
+\subsection{Datenfluss}
+\begin{enumerate}
+	\item Bild wird über die Benutzeroberfläche in einen S3-Bucket geladen.
+	\item Frontend überträgt die Verarbeitungskette ans Backend.
+	\item Backend lädt Bild aus S3-Bucket.
+	\item Backend speichert die Ergebnisse der Verarbeitungskette im S3-Bucket.
+	\item Frontend lädt Ergebnisse aus S3-Bucket und stellt diese dar.
+\end{enumerate}
+
+\subsection{Frontend}
+Für die Interaktion mit dem Benutzer wird React \cite{react} mit Javascript verwendet. Über eine REST-Schnittstelle kann mit dem Backend kommumniziert werden.
+
+\subsection{Backend}
+\begin{itemize}
+	\item Für die serverseitige Verarbeitung wird Python \cite{python} verwendet. 
+	\item Für die Bildverarbeitung wird die OpenCV- \cite{opencv} und SciKit-Image-Bibliothek \cite{scikit-image} verwendet. 
+	\item Für die Bereitstellung der REST-Schnittstelle wird die Flask-Bibliothek \cite{flask} verwendet.
+\end{itemize}
+
+\begin{thebibliography}{00}
+	\bibitem{scratch} Scratch Programmierung: https://scratch.mit.edu/projects/editor/?tutorial=getStarted
+	\bibitem{python} Python: https://www.python.org
+	\bibitem{opencv} OpenCV: https://opencv.org
+	\bibitem{scikit-image} scikit-image: https://scikit-image.org
+	\bibitem{flask} Flask: https://flask.palletsprojects.com/en/2.3.x/
+	\bibitem{react} React: https://react.dev
+	\bibitem{jest} Jest: https://jestjs.io
+	\bibitem{pytest} PyTest: https://docs.pytest.org/en/7.3.x/
+\end{thebibliography}
+\vspace{12pt}
+
+\end{document}
