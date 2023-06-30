@@ -36,9 +36,9 @@ class S3Manager {
         // process.env.AWS_DEFAULT_REGION = 'eu-central-1';
 
         // get credentials from env
-        this.accessKeyId = 'AKIAZUXPDVDVIX7TZC6V'; // process.env.AWS_ACCESS_KEY_ID;
-        this.secretAccessKey = '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'; // process.env.AWS_SECRET_ACCESS_KEY;
-        this.region = 'eu-central-1'; // process.env.AWS_DEFAULT_REGION;
+        this.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+        this.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+        this.region = process.env.AWS_DEFAULT_REGION;
 
         this.bucketName = "team-rot-fatcat-data";
 
